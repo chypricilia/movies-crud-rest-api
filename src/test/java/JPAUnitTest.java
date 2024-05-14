@@ -103,4 +103,28 @@ public class JPAUnitTest {
         
         assertThat(movies).hasSize(2).contains(movie1, movie3);
     }
+    
+    @Test
+    public void should_update_movie_by_id() {
+        Movie movie1 = new Movie("Movie#1", "Movie Description#1", true);
+        entityManager.persist(movie1);
+        
+        Movie movie2 = new Movie("Movie#2", "Movie Description#2", false);
+        entityManager.persist(movie2);
+        
+        Movie updatedMovie = new Movie("Updated Movie#2", "Updated Movie Description#2", true);
+        
+        Movie movie = movieRepository.findById(movie2.getId()).get();
+        movie.setTitle(updatedMovie.getTitle());
+        movie.setDescription(updatedMovie.getDescription());
+        movie.setPublished(updatedMovie.isPublished());
+        movieRepository.save(movie);
+        
+        Movie checkMovie = movieRepository.findById(movie2.getId()).get();
+        
+        assertThat(checkMovie.getId()).isEqualTo(movie2.getId());
+        assertThat(checkMovie.getTitle()).isEqualTo(updatedMovie.getTitle());
+        assertThat(checkMovie.getDescription()).isEqualTo(updatedMovie.getDescription());
+        assertThat(checkMovie.isPublished()).isEqualTo(updatedMovie.isPublished());
+    }
 }
