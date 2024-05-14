@@ -127,4 +127,22 @@ public class JPAUnitTest {
         assertThat(checkMovie.getDescription()).isEqualTo(updatedMovie.getDescription());
         assertThat(checkMovie.isPublished()).isEqualTo(updatedMovie.isPublished());
     }
+    
+    @Test
+    public void should_delete_movie_by_id() {
+        Movie movie1 = new Movie("Movie#1", "Movie Description#1", true);
+        entityManager.persist(movie1);
+        
+        Movie movie2 = new Movie("Movie#2", "Movie Description#2", false);
+        entityManager.persist(movie2);
+        
+        Movie movie3 = new Movie("Movie#3", "Movie Description#3", true);
+        entityManager.persist(movie3);
+        
+        movieRepository.deleteById(movie2.getId());
+        
+        Iterable movies = movieRepository.findAll();
+        
+        assertThat(movies).hasSize(2).contains(movie1, movie3);
+    }
 }
