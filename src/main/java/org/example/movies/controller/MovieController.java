@@ -78,4 +78,20 @@ public class MovieController {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @PutMapping("/movies/{id}")
+    public ResponseEntity<Movie> updateMovie(@PathVariable("id") Long id, @RequestBody Movie movie) {
+        log.info("Update movie");
+        Optional<Movie> movieData = movieRepository.findById(id);
+        
+        if (movieData.isPresent()) {
+            Movie _movie = movieData.get();
+            _movie.setTitle(movie.getTitle());
+            _movie.setDescription(movie.getDescription());
+            _movie.setPublished(movie.isPublished());
+            return new ResponseEntity<>(movieRepository.save(_movie), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
