@@ -94,4 +94,16 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @DeleteMapping("/movies/{id}")
+    public ResponseEntity<HttpStatus> deleteMovie(@PathVariable("id") Long id) {
+        log.info("Delete movie");
+        try {
+            movieRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
