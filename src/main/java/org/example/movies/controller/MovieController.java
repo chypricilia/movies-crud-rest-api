@@ -34,22 +34,29 @@ public class MovieController {
     MovieRepository movieRepository;
     
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getAllMovies(@RequestParam(required = false) String title) {
+    public ResponseEntity<?> getAllMovies(@RequestParam(required = false) String title, @RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         log.info("Get all movies");
         try {
             List<Movie> movies = new ArrayList<>();
+            Pageable paging = PageRequest.of(page, size);
+            
+            Page<Movie> moviePage;
             
             if (title == null) {
-                movieRepository.findAll().forEach(movies::add);
+                moviePage = movieRepository.findAll(paging);
             } else {
-                movieRepository.findByTitleContaining(title).forEach(movies::add);
+                moviePage = movieRepository.findByTitleContaining(title, paging);
             }
             
-            if (movies.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            movies = moviePage.getContent();
             
-            return new ResponseEntity<>(movies, HttpStatus.OK);
+            Map<String, Object> response = new HashMap<>();
+            response.put("movies", movies);
+            response.put("currentPage", moviePage.getNumber());
+            response.put("totalItems", moviePage.getTotalElements());
+            response.put("totalPages", moviePage.getTotalPages());
+            
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error: ", e);
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);

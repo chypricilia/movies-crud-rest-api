@@ -14,5 +14,5 @@ import java.util.List;
  */
 public interface MovieRepository extends JpaRepository<Movie, Long> {
     Page<Movie> findByPublished(boolean published, Pageable pageable);
-    List<Movie> findByTitleContaining(String title);
+    Page<Movie> findByTitleContaining(String title, Pageable pageable);
 }
