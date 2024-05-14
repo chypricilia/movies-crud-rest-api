@@ -66,4 +66,16 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @PostMapping("/movies")
+    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie) {
+        log.info("Add new movie");
+        try {
+            Movie _movie = movieRepository.save(new Movie(movie.getTitle(), movie.getDescription(), false));
+            return new ResponseEntity<>(_movie, HttpStatus.CREATED);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
