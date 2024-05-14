@@ -32,5 +32,14 @@ public class JPAUnitTest {
         
         assertThat(movies).isEmpty();
     }
+    
+    @Test
+    public void should_store_a_movie() {
+        Movie movie = movieRepository.save(new Movie("Movie Title", "Movie Description", true));
+        
+        assertThat(movie).hasFieldOrPropertyWithValue("title", "Movie Title");
+        assertThat(movie).hasFieldOrPropertyWithValue("description", "Movie Description");
+        assertThat(movie).hasFieldOrPropertyWithValue("published", true);
+    }
 
 }
