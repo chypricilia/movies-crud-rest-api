@@ -1,4 +1,4 @@
-/**
+package org.example.movies; /**
  * Author: Pricilia Anna V
  * Date:5/14/2024
  * Time:11:02 PM
@@ -24,6 +24,7 @@ public class JPAUnitTest {
     @Autowired
     private TestEntityManager entityManager;
     
+    @Autowired
     MovieRepository movieRepository;
     
     @Test
