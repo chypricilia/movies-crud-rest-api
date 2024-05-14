@@ -1,6 +1,8 @@
 package org.example.movies.repository;
 
 import org.example.movies.model.Movie;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -11,6 +13,6 @@ import java.util.List;
  * Time:10:14 PM
  */
 public interface MovieRepository extends JpaRepository<Movie, Long> {
-    List<Movie> findByPublished(boolean published);
+    Page<Movie> findByPublished(boolean published, Pageable pageable);
     List<Movie> findByTitleContaining(String title);
 }

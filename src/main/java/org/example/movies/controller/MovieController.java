@@ -10,13 +10,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.example.movies.model.Movie;
 import org.example.movies.repository.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Author: Pricilia Anna V
@@ -120,16 +121,21 @@ public class MovieController {
     }
     
     @GetMapping("/movies/published")
-    public ResponseEntity<List<Movie>> findByPublished() {
+    public ResponseEntity<?> findByPublished(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "3") int size) {
         log.info("Get all published movies");
         try {
-            List<Movie> movies = movieRepository.findByPublished(true);
+            List<Movie> movies = new ArrayList<>();
+            Pageable paging = PageRequest.of(page, size);
             
-            if (movies.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            }
+            Page<Movie> moviePage = movieRepository.findByPublished(true, paging);
             
-            return new ResponseEntity<>(movies, HttpStatus.OK);
+            Map<String, Object> response = new HashMap<>();
+            response.put("movies", movies);
+            response.put("currentPage", moviePage.getNumber());
+            response.put("totalItems", moviePage.getTotalElements());
+            response.put("totalPages", moviePage.getTotalPages());
+            
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Exception e) {
             log.error("Error: ", e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
