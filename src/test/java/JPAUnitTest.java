@@ -41,5 +41,21 @@ public class JPAUnitTest {
         assertThat(movie).hasFieldOrPropertyWithValue("description", "Movie Description");
         assertThat(movie).hasFieldOrPropertyWithValue("published", true);
     }
-
+    
+    
+    @Test
+    public void should_find_all_movies() {
+        Movie movie1 = new Movie("Movie Title 1", "Movie Description 1", true);
+        entityManager.persist(movie1);
+        
+        Movie movie2 = new Movie("Movie Title 2", "Movie Description 2", true);
+        entityManager.persist(movie2);
+        
+        Movie movie3 = new Movie("Movie Title 3", "Movie Description 3", true);
+        entityManager.persist(movie3);
+        
+        Iterable movies = movieRepository.findAll();
+        
+        assertThat(movies).hasSize(3).contains(movie1, movie2, movie3);
+    }
 }
