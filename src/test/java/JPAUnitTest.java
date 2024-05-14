@@ -58,4 +58,17 @@ public class JPAUnitTest {
         
         assertThat(movies).hasSize(3).contains(movie1, movie2, movie3);
     }
+    
+    @Test
+    public void should_find_movie_by_id() {
+        Movie movie1 = new Movie("Movie#1", "Movie Description#1", true);
+        entityManager.persist(movie1);
+        
+        Movie movie2 = new Movie("Movie#2", "Movie Description#2", false);
+        entityManager.persist(movie2);
+        
+        Movie foundMovie = movieRepository.findById(movie2.getId()).get();
+        
+        assertThat(foundMovie).isEqualTo(movie2);
+    }
 }
