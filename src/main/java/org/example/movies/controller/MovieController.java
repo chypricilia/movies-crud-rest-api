@@ -118,4 +118,21 @@ public class MovieController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    
+    @GetMapping("/movies/published")
+    public ResponseEntity<List<Movie>> findByPublished() {
+        log.info("Get all published movies");
+        try {
+            List<Movie> movies = movieRepository.findByPublished(true);
+            
+            if (movies.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            
+            return new ResponseEntity<>(movies, HttpStatus.OK);
+        } catch (Exception e) {
+            log.error("Error: ", e);
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
