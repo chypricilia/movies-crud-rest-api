@@ -69,13 +69,17 @@ movies-crud-rest-api
    mvn spring-boot:run
    ```
 
-4. Once the application is running, you can test the APIs using tools like Postman or cURL.
+4. Once the application is running, you can test the APIs using tools like Postman or cURL. You can access the application at:
+
+   ```
+   http://localhost:8080
+   ```
 
 ## Customization
 
 You can customize the application by adding more endpoints, modifying the existing ones, or adding additional functionality.
 
 ## Troubleshooting
-
+- **Port Conflicts:** If the default port 8080 is in use, you can change it by modifying `src/main/resources/application.properties` and adding `server.port=<new_port_number>`.
 - If you encounter any issues, ensure that you have configured the MySQL database correctly and that the database server is running.
 - Make sure that the required dependencies are correctly configured in the `pom.xml` file.
