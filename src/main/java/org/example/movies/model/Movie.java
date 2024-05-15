@@ -11,6 +11,8 @@ import lombok.Generated;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 /**
  * Author: Pricilia Anna V
  * Date:5/14/2024
@@ -20,11 +22,11 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@Table(name = "movies")
-public class Movie {
+@Table(name = "MOVIES")
+public class Movie implements Serializable {
     
     @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     @Column(name = "title", length = 150)
@@ -40,6 +42,10 @@ public class Movie {
         this.title = title;
         this.description = description;
         this.published = published;
+    }
+    
+    public Movie() {
+    
     }
     
     @Override

@@ -6,10 +6,13 @@ package org.example.movies; /**
 
 import org.example.movies.model.Movie;
 import org.example.movies.repository.MovieRepository;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,6 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Date:5/14/2024
  * Time:11:02 PM
  */
+
 @DataJpaTest
 public class JPAUnitTest {
     
