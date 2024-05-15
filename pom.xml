@@ -65,6 +65,7 @@
     </dependencies>
 
     <build>
+        <finalName>movies-crud-rest-api</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
