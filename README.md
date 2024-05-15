@@ -57,7 +57,7 @@ movies-crud-rest-api
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/chypricilia/movies-crud-rest-api.git
+   git clone https://github.com/chypricilia/spring-boot-mysql.git
    cd movies-crud-rest-api
    ```
 
